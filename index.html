@@ -135,7 +135,7 @@
 
         // 장면, 카메라, 렌더러 설정
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
@@ -198,6 +198,7 @@
             const color = getRandomRetroColor();
             const material = new THREE.LineBasicMaterial({ color: color });
             const line = new THREE.Line(geometry, material);
+            line.frustumCulled = false; // Frustum culling 비활성화
             mainGroup.add(line);
 
             return {
@@ -291,6 +292,12 @@
             updateColors();
             moveBasedOnCamera();
             controls.update();
+
+            // 메인 그룹의 위치에 따라 카메라의 far 값 조정
+            const distance = mainGroup.position.distanceTo(camera.position);
+            camera.far = Math.max(1000, distance * 2);
+            camera.updateProjectionMatrix();
+
             renderer.render(scene, camera);
         }
 
