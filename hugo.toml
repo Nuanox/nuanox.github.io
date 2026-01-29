@@ -1,0 +1,20 @@
+baseURL = 'https://nuanox.github.io/'
+languageCode = 'en-us'
+title = 'Nuanox Blog'
+
+# Build settings
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+[params]
+  description = "A personal blog"
+  author = "Nuanox"
+
+[markup]
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
