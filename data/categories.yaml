@@ -1,0 +1,56 @@
+# Categories configuration
+# You can customize this structure to match your blog organization
+
+categories:
+  - name: "All"
+    url: "/posts/"
+    icon: "="
+    count: 0  # Will be calculated automatically
+
+  - name: "Thoughts & Essays"
+    url: "/tags/thoughts/"
+    icon: "▼"
+    expandable: true
+    children:
+      - name: "Mini Column"
+        url: "/tags/mini-column/"
+      - name: "Fragments of Thought"
+        url: "/tags/fragments/"
+
+  - name: "Study"
+    url: "/tags/study/"
+    icon: "▼"
+    expandable: true
+    children:
+      - name: "Diary"
+        url: "/tags/diary/"
+      - name: "Reading a Paper"
+        url: "/tags/paper/"
+      - name: "Translation"
+        url: "/tags/translation/"
+
+  - name: "Projects"
+    url: "/tags/projects/"
+    icon: "▼"
+    expandable: true
+    children:
+      - name: "Development Log"
+        url: "/tags/dev-log/"
+      - name: "Cryptogram"
+        url: "/tags/cryptogram/"
+
+  - name: "Archive"
+    url: "/tags/archive/"
+    icon: "▼"
+    expandable: true
+    children:
+      - name: "Papers Scrap"
+        url: "/tags/papers/"
+      - name: "LLM Prompt"
+        url: "/tags/llm/"
+      - name: "Repository"
+        url: "/tags/repository/"
+      - name: "Music"
+        url: "/tags/music/"
+      - name: "Private"
+        url: "/tags/private/"

@@ -167,3 +167,62 @@ window.addEventListener('load', () => {
         window.MathJax.typesetPromise();
     }
 });
+
+// Category Toggle Functionality
+function initCategoryToggle() {
+    const categoryItems = document.querySelectorAll('.category-list a[data-expandable="true"]');
+
+    categoryItems.forEach(link => {
+        const toggleIcon = link.querySelector('.category-toggle-icon');
+        const parentLi = link.parentElement;
+        const subCategoryList = parentLi.querySelector('.sub_category_list');
+
+        if (toggleIcon && subCategoryList) {
+            // Check if current page is in this category (for auto-expand)
+            const currentUrl = window.location.pathname;
+            const linkUrl = link.getAttribute('href');
+            const isCurrentCategory = currentUrl.includes(linkUrl.replace(/\/$/, ''));
+
+            // Check sub-items too
+            let isInSubCategory = false;
+            const subLinks = subCategoryList.querySelectorAll('a');
+            subLinks.forEach(subLink => {
+                const subUrl = subLink.getAttribute('href');
+                if (currentUrl.includes(subUrl.replace(/\/$/, ''))) {
+                    isInSubCategory = true;
+                }
+            });
+
+            // Auto-expand if current page is in this category
+            if (isCurrentCategory || isInSubCategory) {
+                subCategoryList.classList.add('expanded');
+            } else {
+                toggleIcon.classList.add('collapsed');
+            }
+
+            // Add click handler for toggle icon
+            toggleIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                this.classList.toggle('collapsed');
+                subCategoryList.classList.toggle('expanded');
+            });
+
+            // Prevent link navigation when clicking on toggle icon
+            link.addEventListener('click', function(e) {
+                // Only prevent if clicking on the toggle icon area
+                const rect = toggleIcon.getBoundingClientRect();
+                const clickX = e.clientX;
+                if (clickX <= rect.right + 10) {
+                    e.preventDefault();
+                    toggleIcon.classList.toggle('collapsed');
+                    subCategoryList.classList.toggle('expanded');
+                }
+            });
+        }
+    });
+}
+
+// Initialize category toggle on DOM ready
+document.addEventListener('DOMContentLoaded', initCategoryToggle);

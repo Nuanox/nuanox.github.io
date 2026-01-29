@@ -62,17 +62,39 @@
                 <div class="category-title">Categories</div>
                 <div class="category-list">
                     <ul>
+                        {{/* All Posts */}}
                         <li>
-                            <a href="{{ .Site.BaseURL }}posts/" class="link_item">
-                                <span class="category-normal-icon">■</span>All Posts
+                            <a href="{{ .Site.BaseURL }}posts/" class="link_item link_tit">
+                                <span class="category-normal-icon">=</span>All ({{ len (where .Site.RegularPages "Section" "posts") }})
                             </a>
                         </li>
-                        {{ range .Site.Taxonomies.tags }}
+
+                        {{/* Dynamic categories from data file */}}
+                        {{ range .Site.Data.categories.categories }}
+                        {{ if .expandable }}
+                        <li class="category-parent">
+                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_tit" data-expandable="true">
+                                <span class="category-toggle-icon">▼</span>{{ .name }}
+                            </a>
+                            {{ if .children }}
+                            <ul class="sub_category_list">
+                                {{ range .children }}
+                                <li>
+                                    <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_sub_item">
+                                        <span class="category-sub-icon">-</span>{{ .name }}
+                                    </a>
+                                </li>
+                                {{ end }}
+                            </ul>
+                            {{ end }}
+                        </li>
+                        {{ else if ne .name "All" }}
                         <li>
-                            <a href="{{ .Page.Permalink }}" class="link_item">
-                                <span class="category-normal-icon">■</span>{{ .Page.Title }} ({{ .Count }})
+                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_tit">
+                                <span class="category-normal-icon">{{ .icon }}</span>{{ .name }}
                             </a>
                         </li>
+                        {{ end }}
                         {{ end }}
                     </ul>
                 </div>
