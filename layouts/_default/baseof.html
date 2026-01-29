@@ -1,34 +1,97 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.LanguageCode | default "en" }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-    {{ $style := resources.Get "css/style.css" }}
+    <link rel="icon" type="image/png" href="https://i.imgur.com/oGJIdQ0.png" alt="Site Icon">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta name="author" content="{{ .Site.Params.author }}">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+
+    {{ with .OutputFormats.Get "RSS" }}
+    <link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }} RSS Feed" href="{{ .RelPermalink }}" />
+    {{ end }}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    {{ $style := resources.Get "css/terminal.css" }}
     {{ if $style }}
     <link rel="stylesheet" href="{{ $style.Permalink }}">
     {{ end }}
     {{ block "head" . }}{{ end }}
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{{ .Site.BaseURL }}" class="site-title">{{ .Site.Title }}</a>
-            <ul>
-                <li><a href="{{ .Site.BaseURL }}">Home</a></li>
-                <li><a href="{{ .Site.BaseURL }}posts/">Posts</a></li>
-                <li><a href="{{ .Site.BaseURL }}about/">About</a></li>
-            </ul>
-        </nav>
+    <!-- Matrix Rain Background Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <header class="header">
+        <a href="{{ .Site.BaseURL }}" class="blog-title">{{ .Site.Title }}</a>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search..." id="searchInput">
+            <button class="search-btn" onclick="performSearch()">Search</button>
+            <button class="search-btn night-toggle" onclick="toggleNightMode()">Night</button>
+        </div>
     </header>
 
-    <main>
-        {{ block "main" . }}{{ end }}
-    </main>
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="category-section">
+                <div class="category-title">Categories</div>
+                <div class="category-list">
+                    <ul>
+                        <li>
+                            <a href="{{ .Site.BaseURL }}posts/" class="link_item">
+                                <span class="category-normal-icon">■</span>All Posts
+                            </a>
+                        </li>
+                        {{ range .Site.Taxonomies.tags }}
+                        <li>
+                            <a href="{{ .Page.Permalink }}" class="link_item">
+                                <span class="category-normal-icon">■</span>{{ .Page.Title }} ({{ .Count }})
+                            </a>
+                        </li>
+                        {{ end }}
+                    </ul>
+                </div>
+            </div>
+        </aside>
 
-    <footer>
-        <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
-    </footer>
+        <main class="content-area">
+            {{ block "main" . }}{{ end }}
+        </main>
+    </div>
+
+    <!-- Night Mode Notification -->
+    <div id="nightModeNotification" class="night-mode-notification">
+        Night mode activated
+    </div>
+
+    {{ $js := resources.Get "js/terminal.js" }}
+    {{ if $js }}
+    <script src="{{ $js.Permalink }}"></script>
+    {{ end }}
 </body>
 </html>
