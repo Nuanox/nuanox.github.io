@@ -62,14 +62,15 @@
                 <div class="category-title">Categories</div>
                 <div class="category-list">
                     <ul>
-                        {{/* All Posts */}}
+                        {{/* All Posts - link_tit class for items without children */}}
                         <li>
-                            <a href="{{ .Site.BaseURL }}posts/" class="link_item">All ({{ len (where .Site.RegularPages "Section" "posts") }})</a>
+                            <a href="{{ .Site.BaseURL }}posts/" class="link_tit">All ({{ len (where .Site.RegularPages "Section" "posts") }})</a>
                         </li>
 
                         {{/* Dynamic categories from data file */}}
                         {{ range .Site.Data.categories.categories }}
                         {{ if .expandable }}
+                        {{/* Parents with children: link_item class (dimmer styling) */}}
                         <li>
                             <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item">{{ .name }}</a>
                             {{ if .children }}
@@ -83,8 +84,9 @@
                             {{ end }}
                         </li>
                         {{ else if ne .name "All" }}
+                        {{/* Items without children: link_tit class */}}
                         <li>
-                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item">{{ .name }}</a>
+                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_tit">{{ .name }}</a>
                         </li>
                         {{ end }}
                         {{ end }}

@@ -174,20 +174,22 @@ function initCategoryToggle() {
     const categoryMatch = currentUrl.match(/\/category\/([^\/]+)/);
     const currentCategory = categoryMatch ? decodeURIComponent(categoryMatch[1]) : null;
 
-    const categoryItems = document.querySelectorAll('.category-list .link_item');
+    // Handle .link_tit items (items WITHOUT children) - add "= " prefix
+    const linkTitItems = document.querySelectorAll('.category-list .link_tit');
+    linkTitItems.forEach(link => {
+        const linkText = link.textContent.trim();
+        link.innerHTML = `<span class="category-normal-icon">=</span> ${linkText}`;
+    });
 
-    categoryItems.forEach(link => {
+    // Handle .link_item items (parents WITH children) - add "▼" toggle
+    const linkItems = document.querySelectorAll('.category-list .link_item:not(.link_sub_item)');
+    linkItems.forEach(link => {
         const linkText = link.textContent.trim();
         const categoryName = linkText.replace(/\s*\(\d+\)\s*$/, '').trim();
         const parentLi = link.parentElement;
         const subCategoryList = parentLi.querySelector('.sub_category_list');
 
-        // Check if this is a sub-item
-        if (link.classList.contains('link_sub_item')) {
-            // Sub-item: add "- " prefix
-            link.innerHTML = `<span class="category-normal-icon">-</span> ${linkText}`;
-        } else if (subCategoryList) {
-            // Has children: add toggle icon "▼"
+        if (subCategoryList) {
             const isCurrentCategory = currentCategory === categoryName;
             const iconClass = isCurrentCategory ? 'category-toggle-icon' : 'category-toggle-icon collapsed';
 
@@ -205,10 +207,14 @@ function initCategoryToggle() {
                 this.classList.toggle('collapsed');
                 subCategoryList.classList.toggle('expanded');
             });
-        } else {
-            // No children: add "= " prefix
-            link.innerHTML = `<span class="category-normal-icon">=</span> ${linkText}`;
         }
+    });
+
+    // Handle .link_sub_item items - add "- " prefix
+    const subItems = document.querySelectorAll('.category-list .link_sub_item');
+    subItems.forEach(link => {
+        const linkText = link.textContent.trim();
+        link.innerHTML = `<span class="category-normal-icon">-</span> ${linkText}`;
     });
 }
 
