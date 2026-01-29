@@ -168,39 +168,36 @@ window.addEventListener('load', () => {
     }
 });
 
-// Category Toggle Functionality
+// Category Toggle Functionality - Matching Original Tistory
 function initCategoryToggle() {
-    const categoryItems = document.querySelectorAll('.category-list a[data-expandable="true"]');
+    const currentUrl = window.location.href;
+    const categoryMatch = currentUrl.match(/\/category\/([^\/]+)/);
+    const currentCategory = categoryMatch ? decodeURIComponent(categoryMatch[1]) : null;
+
+    const categoryItems = document.querySelectorAll('.category-list .link_item');
 
     categoryItems.forEach(link => {
-        const toggleIcon = link.querySelector('.category-toggle-icon');
+        const linkText = link.textContent.trim();
+        const categoryName = linkText.replace(/\s*\(\d+\)\s*$/, '').trim();
         const parentLi = link.parentElement;
         const subCategoryList = parentLi.querySelector('.sub_category_list');
 
-        if (toggleIcon && subCategoryList) {
-            // Check if current page is in this category (for auto-expand)
-            const currentUrl = window.location.pathname;
-            const linkUrl = link.getAttribute('href');
-            const isCurrentCategory = currentUrl.includes(linkUrl.replace(/\/$/, ''));
+        // Check if this is a sub-item
+        if (link.classList.contains('link_sub_item')) {
+            // Sub-item: add "- " prefix
+            link.innerHTML = `<span class="category-normal-icon">-</span> ${linkText}`;
+        } else if (subCategoryList) {
+            // Has children: add toggle icon "▼"
+            const isCurrentCategory = currentCategory === categoryName;
+            const iconClass = isCurrentCategory ? 'category-toggle-icon' : 'category-toggle-icon collapsed';
 
-            // Check sub-items too
-            let isInSubCategory = false;
-            const subLinks = subCategoryList.querySelectorAll('a');
-            subLinks.forEach(subLink => {
-                const subUrl = subLink.getAttribute('href');
-                if (currentUrl.includes(subUrl.replace(/\/$/, ''))) {
-                    isInSubCategory = true;
-                }
-            });
+            link.innerHTML = `<span class="${iconClass}">▼</span> ${linkText}`;
 
-            // Auto-expand if current page is in this category
-            if (isCurrentCategory || isInSubCategory) {
+            if (isCurrentCategory) {
                 subCategoryList.classList.add('expanded');
-            } else {
-                toggleIcon.classList.add('collapsed');
             }
 
-            // Add click handler for toggle icon
+            const toggleIcon = link.querySelector('.category-toggle-icon');
             toggleIcon.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -208,18 +205,9 @@ function initCategoryToggle() {
                 this.classList.toggle('collapsed');
                 subCategoryList.classList.toggle('expanded');
             });
-
-            // Prevent link navigation when clicking on toggle icon
-            link.addEventListener('click', function(e) {
-                // Only prevent if clicking on the toggle icon area
-                const rect = toggleIcon.getBoundingClientRect();
-                const clickX = e.clientX;
-                if (clickX <= rect.right + 10) {
-                    e.preventDefault();
-                    toggleIcon.classList.toggle('collapsed');
-                    subCategoryList.classList.toggle('expanded');
-                }
-            });
+        } else {
+            // No children: add "= " prefix
+            link.innerHTML = `<span class="category-normal-icon">=</span> ${linkText}`;
         }
     });
 }
