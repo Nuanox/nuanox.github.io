@@ -283,24 +283,14 @@ body.night-mode .category-list ul ul a {
 /* Expandable Category Styles */
 .category-toggle-icon {
     cursor: pointer;
-    margin-right: 5px;
-    display: inline-block;
+    display: inline;
     transition: transform var(--transition-speed);
     user-select: none;
-    opacity: 0.8;
-}
-
-.category-toggle-icon:hover {
-    opacity: 1;
 }
 
 .category-toggle-icon.collapsed {
+    display: inline-block;
     transform: rotate(-90deg);
-}
-
-.category-sub-icon {
-    margin-right: 5px;
-    opacity: 0.6;
 }
 
 .category-parent {
@@ -315,7 +305,7 @@ body.night-mode .category-list ul ul a {
     opacity: 0;
     border-left: 1px dashed var(--terminal-white);
     padding-left: 15px;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .sub_category_list.expanded {
@@ -343,14 +333,6 @@ body.night-mode .sub_category_list a {
 .sub_category_list a:hover {
     background: var(--terminal-dim);
     color: var(--terminal-bg);
-}
-
-.link_tit::before {
-    content: "";
-}
-
-.link_sub_item::before {
-    content: "";
 }
 
 .content-area {
