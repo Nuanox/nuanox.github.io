@@ -62,21 +62,21 @@
                 <div class="category-title">Categories</div>
                 <div class="category-list">
                     <ul>
-                        {{/* All Posts - with = prefix */}}
+                        {{/* All Posts */}}
                         <li>
-                            <a href="{{ .Site.BaseURL }}posts/" class="link_item link_tit">= All ({{ len (where .Site.RegularPages "Section" "posts") }})</a>
+                            <a href="{{ .Site.BaseURL }}posts/" class="link_item">All ({{ len (where .Site.RegularPages "Section" "posts") }})</a>
                         </li>
 
                         {{/* Dynamic categories from data file */}}
                         {{ range .Site.Data.categories.categories }}
                         {{ if .expandable }}
-                        <li class="category-parent">
-                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_tit" data-expandable="true"><span class="category-toggle-icon">▼</span> {{ .name }}</a>
+                        <li>
+                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item">{{ .name }}</a>
                             {{ if .children }}
                             <ul class="sub_category_list">
                                 {{ range .children }}
                                 <li>
-                                    <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_sub_item">- {{ .name }}</a>
+                                    <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_sub_item">{{ .name }}</a>
                                 </li>
                                 {{ end }}
                             </ul>
@@ -84,7 +84,7 @@
                         </li>
                         {{ else if ne .name "All" }}
                         <li>
-                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item link_tit">= {{ .name }}</a>
+                            <a href="{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" .url }}" class="link_item">{{ .name }}</a>
                         </li>
                         {{ end }}
                         {{ end }}
