@@ -7,14 +7,22 @@ buildDrafts = false
 buildFuture = false
 buildExpired = false
 
+# Pagination
+paginate = 10
+
 [params]
   description = "A personal blog"
   author = "Nuanox"
+
+[taxonomies]
+  tag = "tags"
 
 [markup]
   [markup.highlight]
     style = 'monokai'
     lineNos = true
+    codeFences = true
+    guessSyntax = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
