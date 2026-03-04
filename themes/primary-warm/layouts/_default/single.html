@@ -5,7 +5,7 @@
         {{ .Date.Format .Site.Params.dateFormat }}
         {{ with .Params.tags }}
         <div class="post-tags">
-            {{ range . }}<a class="tag" href="{{ " tags/" | relURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
+            {{ range . }}<a class="tag" href="{{ "tags/" | relURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
         </div>
         {{ end }}
     </div>

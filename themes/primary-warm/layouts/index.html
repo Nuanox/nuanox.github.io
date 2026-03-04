@@ -18,13 +18,13 @@
             <div class="post-meta">{{ .Date.Format $.Site.Params.dateFormat }}</div>
             {{ with .Params.tags }}
             <div class="post-tags">
-                {{ range . }}<a class="tag" href="{{ " tags/" | relURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
+                {{ range . }}<a class="tag" href="{{ "tags/" | relURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
             </div>
             {{ end }}
         </li>
         {{ end }}
     </ul>
-    <p><a href="{{ " archive/" | relURL }}">View all archive entries &rarr;</a></p>
+    <p><a href="{{ "archive/" | relURL }}">View all archive entries &rarr;</a></p>
 </div>
 {{ end }}
 
@@ -40,7 +40,7 @@
         </li>
         {{ end }}
     </ul>
-    <p><a href="{{ " posts/" | relURL }}">View all posts &rarr;</a></p>
+    <p><a href="{{ "posts/" | relURL }}">View all posts &rarr;</a></p>
 </div>
 {{ end }}
 {{ end }}
