@@ -10,6 +10,9 @@ defaultContentLanguage = "en"
 # Pagination: how many items per list page
 paginate = 20
 
+# Exclude specific files
+ignoreFiles = ["archive/GUIDE\\.md$"]
+
 # Enable tags and categories for flexible taxonomy
 [taxonomies]
   tag = "tags"
@@ -50,6 +53,3 @@ summaryLength = 80
   dateFormat = "2006-01-02"
   description = "A personal archive of thoughts, spoken and written."
   author = "Nuanox"
-
-# Exclude specific files
-ignoreFiles = ["archive/GUIDE\\.md$"]
