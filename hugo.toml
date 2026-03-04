@@ -1,0 +1,52 @@
+# Site metadata
+baseURL = "https://nuanox.github.io/"
+languageCode = "en"
+title = "Nuanox's Archive"
+theme = "primary-warm"
+
+# English UI, Korean content
+defaultContentLanguage = "en"
+
+# Pagination: how many items per list page
+paginate = 20
+
+# Enable tags and categories for flexible taxonomy
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+# Top navigation menu
+[[menus.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menus.main]]
+  name = "Archive"
+  url = "/archive/"
+  weight = 2
+
+[[menus.main]]
+  name = "Posts"
+  url = "/posts/"
+  weight = 3
+
+[[menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 4
+
+# Markdown rendering: allow raw HTML in content
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# Summary length for list pages (in words)
+summaryLength = 80
+
+# Date format used in templates
+[params]
+  dateFormat = "2006-01-02"
+  description = "A personal archive of thoughts, spoken and written."
+  author = "Nuanox"

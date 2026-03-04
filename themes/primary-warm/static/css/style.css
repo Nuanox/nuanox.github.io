@@ -1,0 +1,284 @@
+/* ────────────────────────────────────
+   primary-warm theme
+   CSS variables for easy theme swapping.
+   Override these variables to change the entire look.
+   ──────────────────────────────────── */
+
+:root {
+  --bg: #FAF8F5;
+  --bg-secondary: #F0EDE8;
+  --text: #2B2B2B;
+  --text-muted: #6B6560;
+  --accent-red: #E5524A;
+  --accent-blue: #4A90D9;
+  --accent-yellow: #F5C542;
+  --border: #E0DCD5;
+  --code-bg: #F0EDE8;
+  --link: #4A90D9;
+  --link-hover: #E5524A;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Code", "Fira Code", "Consolas", monospace;
+  --max-width: 720px;
+  --radius: 4px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ── */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Header ── */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: var(--accent-red);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.site-nav a:hover {
+  color: var(--accent-red);
+}
+
+/* ── Main ── */
+main {
+  padding: 2rem 0;
+  min-height: 60vh;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.15rem; }
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+/* ── Article list ── */
+.post-list {
+  list-style: none;
+}
+
+.post-list-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-list-item:last-child {
+  border-bottom: none;
+}
+
+.post-list-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.post-list-title a {
+  color: var(--text);
+}
+
+.post-list-title a:hover {
+  color: var(--accent-red);
+}
+
+.post-meta {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.post-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.tag:hover {
+  background: var(--accent-yellow);
+  color: var(--text);
+}
+
+/* ── Single post ── */
+.post-header {
+  margin-bottom: 2rem;
+}
+
+.post-header h1 {
+  margin-top: 0;
+}
+
+.post-content {
+  word-wrap: break-word;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.post-content blockquote {
+  border-left: 3px solid var(--accent-yellow);
+  padding-left: 1rem;
+  margin: 1em 0;
+  color: var(--text-muted);
+}
+
+.post-content code {
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius);
+  font-size: 0.9em;
+}
+
+.post-content pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ── Section label (archive vs posts) ── */
+.section-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* ── Homepage ── */
+.home-intro {
+  padding: 2rem 0;
+}
+
+.home-intro h1 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+.home-intro p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.home-section {
+  margin-top: 2rem;
+}
+
+.home-section h2 {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .site-header .container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .site-nav {
+    gap: 1rem;
+  }
+
+  h1 { font-size: 1.5rem; }
+  .home-intro h1 { font-size: 1.6rem; }
+}
