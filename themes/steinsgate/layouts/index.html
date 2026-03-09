@@ -1,0 +1,55 @@
+{{ define "main" }}
+<div class="hero">
+    <h1 class="hero-title">{{ .Site.Title }}</h1>
+    <div class="hero-divergence">1.048596</div>
+    <p class="hero-desc">{{ .Site.Params.description }}</p>
+</div>
+
+{{ $archive := where .Site.RegularPages "Section" "archive" }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+
+{{ if $archive }}
+<div class="home-section">
+    <div class="home-section-header">
+        <span class="home-section-title">Recent Archive</span>
+        <a class="home-section-link" href="{{ "archive/" | relURL }}">View all &rarr;</a>
+    </div>
+    <ul class="post-list">
+        {{ range first 5 $archive.ByDate.Reverse }}
+        <li class="post-list-item">
+            <div class="post-list-meta">
+                <span class="post-list-date">{{ .Date.Format $.Site.Params.dateFormat }}</span>
+                <span class="section-label">archive</span>
+            </div>
+            <div class="post-list-title"><a href="{{ .Permalink }}">{{ .Title }}</a></div>
+            {{ with .Params.tags }}
+            <div class="post-tags">
+                {{ range . }}<a class="tag" href="{{ "tags/" | relURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
+            </div>
+            {{ end }}
+        </li>
+        {{ end }}
+    </ul>
+</div>
+{{ end }}
+
+{{ if $posts }}
+<div class="home-section">
+    <div class="home-section-header">
+        <span class="home-section-title">Recent Posts</span>
+        <a class="home-section-link" href="{{ "posts/" | relURL }}">View all &rarr;</a>
+    </div>
+    <ul class="post-list">
+        {{ range first 5 $posts.ByDate.Reverse }}
+        <li class="post-list-item">
+            <div class="post-list-meta">
+                <span class="post-list-date">{{ .Date.Format $.Site.Params.dateFormat }}</span>
+                <span class="section-label">post</span>
+            </div>
+            <div class="post-list-title"><a href="{{ .Permalink }}">{{ .Title }}</a></div>
+        </li>
+        {{ end }}
+    </ul>
+</div>
+{{ end }}
+{{ end }}

@@ -1,0 +1,22 @@
+<header class="site-header">
+    <div class="container">
+        <a href="{{ .Site.BaseURL }}" class="site-title">
+            <svg class="gear-icon" viewBox="0 0 200 200" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 30a70 70 0 1 0 0 140 70 70 0 0 0 0-140zm0 110a40 40 0 1 1 0-80 40 40 0 0 1 0 80z"/>
+                <rect x="93" y="0" width="14" height="30" rx="3"/>
+                <rect x="93" y="170" width="14" height="30" rx="3"/>
+                <rect x="0" y="93" width="30" height="14" rx="3"/>
+                <rect x="170" y="93" width="30" height="14" rx="3"/>
+                <circle cx="100" cy="100" r="15" fill="none" stroke="currentColor" stroke-width="4"/>
+            </svg>
+            {{ .Site.Title }}
+        </a>
+        <nav>
+            <ul class="site-nav">
+                {{ range .Site.Menus.main }}
+                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                {{ end }}
+            </ul>
+        </nav>
+    </div>
+</header>

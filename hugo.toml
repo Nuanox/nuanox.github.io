@@ -2,7 +2,7 @@
 baseURL = "https://nuanox.github.io/"
 languageCode = "en"
 title = "Nuanox's Archive"
-theme = "primary-warm"
+theme = "steinsgate"
 
 # English UI, Korean content
 defaultContentLanguage = "en"
